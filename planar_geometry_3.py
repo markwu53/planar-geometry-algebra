@@ -59,6 +59,7 @@ def shift(d):
     return np.array(sdir[d])*fontsize + np.array([fontsize/2,fontsize/2])
 
 def run():
+    # Feuerbach theorem
     pA = np.array([0,0])
     pB = np.array([1,0])
     aA = rad(50)
