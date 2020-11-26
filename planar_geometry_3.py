@@ -4,8 +4,8 @@ import matplotlib.patches
 import matplotlib.pyplot as plt
 
 fig, ax = plt.subplots()
-#plt.xlim(-1.,1.5)
-#plt.ylim(-1.5,1.5)
+plt.xlim(-.5,1.5)
+plt.ylim(-.5,1.5)
 ax.set_aspect(1)
 
 def lseg(pA, pB, **karg):
@@ -68,12 +68,22 @@ def run():
     pD = x2line(line2p(pA, pH), line2p(pB, pC))
     pE = x2line(line2p(pB, pH), line2p(pA, pC))
     pF = x2line(line2p(pC, pH), line2p(pB, pA))
+    pEu = circumcenter(pD, pE, pF)
+    rEu = vlen(pEu-pD)
+    pX = findC(pC, pB, np.tan((aA+aB)/2), 1/np.tan(aB/2))
+    rX = pX[1]
+    pC2 = pA+3*(pC-pA)
+    pB2 = pA+3*(pB-pA)
 
     polygon([pA, pB, pC])
     lseg(pA, pD)
     lseg(pB, pE)
     lseg(pC, pF)
+    lseg(pC, pC2)
+    lseg(pB, pB2)
     polygon([pD, pE, pF])
+    ax.add_patch(matplotlib.patches.Circle(pX, rX, color="r", fill=False))
+    ax.add_patch(matplotlib.patches.Circle(pEu, rEu, color="r", fill=False))
     ax.add_patch(matplotlib.patches.Circle(pH, .005, color="r", fill=False))
     ax.text(*(pA+shift(4)), "A", fontweight="normal", fontsize=14)
     ax.text(*(pB+shift(6)), "B", fontweight="normal", fontsize=14)
@@ -82,6 +92,7 @@ def run():
     ax.text(*(pE+shift(2)), "E", fontweight="normal", fontsize=14)
     ax.text(*(pF+shift(5)), "F", fontweight="normal", fontsize=14)
     ax.text(*(pH+shift(1)), "H", fontweight="normal", fontsize=14)
+    ax.text(*(pX+shift(1)), "X", fontweight="normal", fontsize=14)
 
     plt.show()
 
